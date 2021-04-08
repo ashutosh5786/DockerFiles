@@ -1,0 +1,8 @@
+FROM centos
+EXPOSE 8080
+RUN dnf install java wget initscripts -y
+RUN wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+RUN rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+RUN dnf install jenkins -y
+RUN echo "jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+ENTRYPOINT ["java", "-jar", "/usr/lib/jenkins/jenkins.war" ]
